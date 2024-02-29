@@ -15,7 +15,9 @@ for site in "${websites[@]}"; do
     # Перевірка статус-коду та запис результатів у файл логів та вивід на екран
     if [ $status_code -eq 200 ]; then
         echo "$site is UP" | tee -a $logfile
-    else
+    elif [ $status_code -eq 300 -o $status_code -eq 301 ]; then
+        echo "$site has been redirected (status code: $status_code)" | tee -a $logfile   
+    else 
         echo "$site is DOWN" | tee -a $logfile
     fi
 done
